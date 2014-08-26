@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>REST 和 RESTful</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section data-markdown>
+          <script type="text/template">
+            # REST 和 RESTful
+
+            <small>[杨海龙](http://reyesyang.info) / [@reyesyang](http://twitter.com/reyesyang)</small>
+          </script>
+				</section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## REST 简介
+
+              REST 是由 [Roy Fielding](http://en.wikipedia.org/wiki/Roy_Fielding) 博士在 2000 年他的博士论文《[架构风格与基于网络的软件架构设计](http://www.infoq.com/cn/minibooks/dissertation-rest-cn)》([Architectural Styles and the Design of Network-based Software Architectures](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)) 中提出来的一种**软件架构风格**。
+            </script>
+         </section>
+
+         <section data-markdown>
+           <script type="text/template">
+             ### Roy Fielding 是谁？
+
+             * 参与制订了 HTTP1.0/HTTP1.1
+             * 参与制订了 URL
+             * 曾任 Apache 软件基金会主席
+             * 现任 Adobe System 首席科学家
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### REST 是什么意思？
+
+              REST 是 **Re**presentational **S**tate **T**ransfer 的简称，中文通常使用的翻译有：“表征状态转移”，“表述性状态转移”
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### REST 提出的目的？
+
+              > 这个名称“表述性状态转移”是有意唤起人们对于一个良好设计的 Web 应
+              用如何运转的印象:一个由网页组成的网络(一个虚拟状态机),用户通过选择链接(状态
+              转移)在应用中前进,导致下一个页面(代表应用的下一个状态)被转移给用户,并且呈现
+              给他们,以便他们来使用。
+            </script>
+          </section>
+				</section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## REST 架构约束
+
+              1. 客户端-服务器架构(Client-Server)
+              1. 无状态(Stateless)
+              1. 缓存(Cache)
+              1. 统一接口(Uniform Interface)
+              1. 分层系统(Layered system)
+              1. 按需代码(Code-on-demand) (optional)
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### 客户端-服务器架构(Client-Server)
+
+              通过 API 将内部逻辑和客户端分离，客户端只能通过 API 来调用服务端资源。
+              方便服务端扩展和升级。这里是广义的客户端，区别于现在常说的 CS，BS 架构。
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### 无状态(Stateless)
+
+              客户端发出的请求应该含有服务端理解该请求的所有信息，方便服务端的扩展。
+
+              HTTP 本身的无状态性以及为了保存状态而引入的 HTTP Session。
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### 缓存(Cache)
+
+              * User Agent 缓存，如浏览器(Conditional GET)
+              * 服务器缓存(Memcached, Redis)
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### 统一接口(Uniform Interface)
+
+              * 资源标识(Indentification of resources) URL
+              * 通过表述对资源进行操作(Manipulation of resources through representations) HTTP method 和 MIME
+              * 自描述消息(Self-descriptive messages), HTTP 报文(HTTP status code)
+              * 超媒体作为应用状态引擎(hypermedia as the engine of application state, HATEOAS)
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### 分层系统(Layered system)
+              
+              * 负载均衡
+              * 中间件缓存
+              * 代理
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### 按需代码(Code-on-demand) (optional)
+
+              > 通过下载并执行 applet 形式或脚本形式的代码，REST 允许对客户端的功
+              能进行扩展。这样，通过减少必须被预先实现的功能的数目，简化了客户端的开发。
+
+              个人的理解，其实网站已经实现了这点，浏览器作为一个客户端，为用户所
+              呈现的界面和功能都是从服务端下载的 HTML，JS 和 CSS 生成的。
+            </script>
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## RESTful 是什么？
+
+              对 REST 的实践。经常使用的是 RESTful API，主要是对 REST 中的第四点约束的实践。
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ## RESTful API 的设计建议
+
+              1. 直观简洁的 URL 设计
+              1. 合理使用 HTTP Method
+              1. 合理使用 HTTP Status Code
+              1. 内容协商
+              1. 多版本
+              1. 错误信息
+              1. 必要情况下提供非 RESTful 兼容 API 
+              1. HATEOAS
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### 直观简洁的 URL 设计
+
+              * 名词 vs 动词
+
+                  POST /create_book
+                  POST /books
+
+              * 单数 vs 复数
+                  
+                  GET /books
+                  GET /books/id
+
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### 合理使用 HTTP Method 
+
+              * 安全性 GET
+              * 幂等性 PUT，DELETE，PATCH
+              <a href="/logout">
+              <img src="/logout">
+              * 既不幂等，又不安全 POST
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### 合理使用 HTTP Status Code
+
+              * 2xx  成功
+                * 200 OK
+                * 201 Created
+                * 204 No Content
+              * 3xx  重定向
+              * 4xx  客户端错误
+                * 401 Unauthorized
+                * 402 Payment Required
+                * 403 Forbidden
+                * 404 Not Found
+                * 422 Unprocessable Entity
+              * 5xx  服务器错误
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### 内容协商
+
+              * 响应格式
+                * HTTP 头：Accept: application/json
+                * URL 后缀：http://bookshop.com/books.json
+              * 排序
+                * order
+                * sort
+              * 分页
+                * body 中返回：first, next, preview, last
+                * [Link Head](https://developer.github.com/v3/#pagination)
+              * 指定返回字段，如：fields=name,isbn
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### 多版本
+
+              API 全局大版本，区别与我们工作中遇到的不同客户端版本，不同的 API
+
+              * URL 中传递版本
+              * 自定义 HTTP Header
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### 错误信息
+
+              方便开发者调试
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### 兼容性非 RESTful 接口
+
+              1. Ajax 在老浏览器的跨域问题
+                * 服务端代理
+                * [JSONP](https://developer.github.com/v3/#json-p-callbacks)
+              1. 某些版本的 Flash 可能会认为 200 以外的 Http Status Code 都是错误。
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### HATEOAS
+
+              hypermedia as the engine of application state
+
+                  curl http://api.github.com
+
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template">
+              ### 推荐参考的 API 实现
+
+              * [Github API: https://developer.github.com/v3/](https://developer.github.com/v3/)
+              * [豆瓣 API: http://developers.douban.com/wiki/?title=api_v2](http://developers.douban.com/wiki/?title=api_v2)
+            </script>
+          </section>
+        </section>
+
+				<section data-markdown>
+          <script type="text/template">
+            # Q & A
+
+            <small>[杨海龙](http://reyesyang.info) / [@reyesyang](http://twitter.com/reyesyang)</small>
+          </script>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
